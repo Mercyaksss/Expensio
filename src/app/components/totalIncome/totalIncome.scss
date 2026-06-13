@@ -1,0 +1,70 @@
+.total-income {
+  grid-row: 1;
+  grid-column: 2;
+  font-family: var(--card-font);
+  display: flex;
+  flex-direction: column;
+  // background-color: var(--expense-light);
+  gap: 20px;
+  // Gradient accent — purple to a slightly darker shade
+  // background: linear-gradient(135deg, var(--expense) 0%, var(--accent) 100%);
+  border: none; // gradient card doesn't need a border
+
+  // Override the default .kpi flex gap for tighter control
+  gap: 0;
+  justify-content: space-between;
+
+  // ── Icon + label row ──────────────────────────
+  .kpi-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    // Icon circle — slightly lighter than the gradient
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    // "INCOME" label — overrides the .kpi span
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  // ── Amount ───────────────────────────────────
+  .kpi-amount {
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 12px 0 0;
+    line-height: 1;
+  }
+
+  // ── Subtle "Monthly" tag at the bottom ───────
+  .kpi-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 6px 0 0;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+}
+
+  @media (max-width: 850px) {
+    .total-income{
+      grid-row: 1 ;
+      grid-column: 3 / span 2;
+    }
+  }

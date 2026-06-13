@@ -1,0 +1,173 @@
+.expenses-page {
+  background-color: var(--card-backround);
+
+  // ── Stats row — 3 summary cards across the top ──
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+
+    // Stack to one column on mobile
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Individual summary stat card
+  .stat-card {
+    background: var(--card-background);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 0 0 6px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin: 0;
+
+      // Red variant — used for biggest expense
+      &.danger { color: var(--expense); }
+    }
+  }
+
+  // ── Table card wrapper ──
+  .table-card {
+    // background: var(--card-backround);
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+
+    // Horizontal scroll on small screens so the table doesn't crush
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  // ── Main expenses table ──
+  .expenses-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px; // prevents columns from crushing on narrow viewports
+
+    // Column header row
+    thead tr {
+      border-bottom: 1px solid var(--text-muted);
+
+      th {
+        padding: 13px 20px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #aaa;
+        text-align: left;
+        white-space: nowrap;
+      }
+    }
+
+    // Data rows
+    tbody tr {
+      transition: background 0.12s;
+
+      &:hover      { background: var(--hover-2); }
+
+      // Alternating row tint on mobile for readability
+      &:nth-child(even) { background: var(--card-background); }
+      &:nth-child(even):hover { background: var(--hover-3); }
+
+      td {
+        padding: 14px 20px;
+        font-size: 13px;
+        vertical-align: middle;
+      }
+    }
+
+    // Expense name — slightly bolder
+    .expense-name {
+      font-weight: 500;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    // Category pill badge
+    .category-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    // Date — muted
+    .expense-date { color: #888; }
+
+    // Amount — always red
+    .expense-amount {
+      font-weight: 600;
+      color: #da5f50;
+      white-space: nowrap;
+    }
+
+    // Edit + Delete button cell
+    .actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    // Icon action buttons
+    .action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: background 0.12s;
+
+      &.edit {
+        background: #f5f5f3;
+        color: #555;
+        &:hover { background: #ebebeb; }
+      }
+
+      &.delete {
+        background: rgba(218, 95, 80, 0.08);
+        color: #da5f50;
+        &:hover { background: rgba(218, 95, 80, 0.15); }
+      }
+    }
+  }
+
+  // ── Empty state ──
+  .empty-state {
+    padding: 48px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    p {
+      font-size: 14px;
+      color: #aaa;
+      margin: 0;
+    }
+  }
+}

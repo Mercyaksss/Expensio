@@ -1,0 +1,138 @@
+.recent-expenses-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  grid-row: 2 / span 2;
+  // ── Header ──────────────────────────────────
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    h3 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  }
+
+  // ── Scrollable list — takes all space between header and footer ──
+  .expenses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    overflow-y: auto;
+
+    // Hide scrollbar visually but keep it functional
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+
+    .empty-state {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 24px;
+    }
+  }
+
+  // ── Individual expense row ───────────────────
+  .recent-expense-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    transition: background 0.15s;
+
+    &:hover { background: rgba(255, 255, 255, 0.04); }
+
+    // Category icon circle
+    .expense-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+
+      // Per-category tints
+      &.savings   { background: rgba(142, 72, 205, 0.15); color: var(--purple); }
+      &.transport { background: rgba(247,111, 50, 0.12);  color: var(--orange); }
+      &.data      { background: rgba( 55,138,221, 0.12);  color: #378ADD;       }
+      &.work      { background: rgba(127,119,221, 0.12);  color: #7F77DD;       }
+      &.tech      { background: rgba(239,159, 39, 0.12);  color: #EF9F27;       }
+    }
+
+    // Name + date stacked vertically
+    .expense-details {
+      flex: 1;
+      min-width: 0; // allows text-overflow to work inside flex
+
+      .expense-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--white);
+        margin: 0 0 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .expense-date {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin: 0;
+      }
+    }
+
+    // Amount — right-aligned, always red
+    .expense-amount {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--expense, #da5f50);
+      flex-shrink: 0;
+    }
+  }
+
+  // ── Footer — sits naturally at the bottom via flex column ──
+  .card-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; // never gets squished by the list above
+
+    .footer-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .footer-total {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--expense, #da5f50);
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .recent-expenses-card{
+    grid-row: 3;
+    grid-column: 3 / span 2;
+  }
+}

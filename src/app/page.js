@@ -1,66 +1,55 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import { useExpenses } from "./context/ExpenseContext";
+import CreditCard from "./components/creditCard/creditCard";
+import RecentExpensesCard from "./components/recentExpensesCard/recentExpensesCard";
+import FinancialGoalsCard from "./components/financialGoalsCard/financialGoalsCard";
+import ExpensesAnalysis from "./components/expensesAnalysis/expensesAnalysis";
+import AddExpenseModal from "./components/addExpenseModal/addExpenseModal";
+import SetIncomeModal from "./components/setIncomeModal/setIncomeModal";
+import { Plus } from "lucide-react";
+import TotalIncome from "./components/totalIncome/totalIncome";
+import TotalExpenses from "./components/totalExpenses/totalExpenses";
+
+function Home() {
+  // Pull the live user name — updates instantly when changed in Settings
+  const { userName } = useExpenses();
+
+  // Show only the first name in the greeting e.g. "Mercy Yakubu" → "Mercy"
+  const firstName = userName?.split(" ")[0] ?? userName;
+
+  const [addOpen,    setAddOpen]    = useState(false);
+  const [incomeOpen, setIncomeOpen] = useState(false);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <section className="page">
+
+      {/* Nav — greeting uses live first name from context */}
+      <nav>
+        <h2>Welcome <span>{firstName}</span> </h2>
+        <div className="nav-actions">
+          <button className="income-btn"      onClick={() => setIncomeOpen(true)}>Set Income</button>
+          <button className="add-expense-btn" onClick={() => setAddOpen(true)}> <Plus size={20}/> Add Expense</button>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </nav>
+
+      {/* Dashboard grid */}
+      <div className="grid">
+        <CreditCard />
+        <TotalIncome/>
+        <TotalExpenses/>
+        <ExpensesAnalysis />
+        <RecentExpensesCard />
+        <FinancialGoalsCard />
+      </div>
+
+      {/* Modals */}
+      <AddExpenseModal  isOpen={addOpen}    onClose={() => setAddOpen(false)}    />
+      <SetIncomeModal   isOpen={incomeOpen} onClose={() => setIncomeOpen(false)} />
+
+    </section>
   );
 }
+
+export default Home;

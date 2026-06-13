@@ -1,0 +1,210 @@
+// ── Sidebar width token — change once, applies everywhere ──
+$sidebar-width: 200px;
+$tab-width: 20px;
+
+// ── Breakpoint at which sidebar switches to slide-in mode ──
+$mobile-break: 1024px;
+
+.sidebar {
+  position: relative;
+  height: 100vh;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 15px 15px 28px;
+
+  // ── On tablet/mobile: sidebar is fixed and hidden off-screen ──
+  @media (max-width: $mobile-break) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    transform: translateX(-100%); // hidden by default
+    transition: transform 0.3s ease;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+
+    // Slides in when .sidebar--open is applied
+    &.sidebar--open {
+      transform: translateX(0);
+    }
+  }
+
+  // App name
+  .sidebar-logo {
+    font-size: 20px;
+    color: var(--white);
+    margin: 0 0 32px 8px;
+
+    span{
+      color: var(--accent);
+    }
+  }
+
+  // Profile pill
+  .sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    border-radius: 12px;
+    // background: #dada16;
+    margin-bottom: 32px;
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      // background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .profile-info {
+      // Prevent long names from overflowing the pill
+      min-width: 0;
+
+      .profile-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--white);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .profile-sub {
+        font-size: 11px;
+        color: #888;
+        margin: 0;
+      }
+    }
+  }
+
+  // "MENU" section label
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 8px 8px;
+  }
+
+  // Nav links container — flex:1 pushes logout to the bottom
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    // background-color: red;
+  }
+
+  // Individual nav link
+  .side-nav-links {
+    width: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 30px 0 0 30px;
+    text-decoration: none;
+    transition: background 0.15s;
+
+    img {
+      width: 17px;
+      height: 17px;
+      // opacity: 0.45;
+    }
+
+    p {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--white);
+      margin: 0;
+    }
+
+    // Active page styling
+    &.active {
+      // background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--background));
+      img { opacity: 1; filter: brightness(0) invert(1); }
+    }
+
+    &:not(.active):hover { background: var(--hover);  }
+  }
+
+  // Logout button — sits at the bottom
+  .logout-btn {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 15px 12px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    bottom: 0;
+    font-family: var(--text-font);
+
+
+    p {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--white);
+      margin: 0;
+    }
+
+
+  }
+}
+
+// ── Dark overlay behind sidebar on mobile/tablet ──
+.sidebar-overlay {
+  display: none; // hidden on desktop
+
+  @media (max-width: $mobile-break) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 199; // just below the sidebar
+  }
+}
+
+// ── Floating edge tab — only visible on tablet/mobile ──
+.sidebar-tab {
+  display: none; // hidden on desktop
+
+  @media (max-width: $mobile-break) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: $tab-width;
+    height: 52px;
+    background: #1a1a1a;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    z-index: 201; // above the sidebar so it's always tappable
+    transition: left 0.3s ease;
+
+    i { font-size: 14px; color: #fff; }
+
+    // When sidebar is open, tab slides to sit at the sidebar's right edge
+    &.open {
+      left: $sidebar-width;
+    }
+  }
+}

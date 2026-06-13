@@ -1,0 +1,123 @@
+// Full-screen dark overlay — sits on top of everything
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+// The white modal box
+.modal {
+  background: var(--background);
+  border-radius: 24px;
+  padding: 32px;
+  width: 420px;
+  max-width: 90vw;
+
+  // Header row — title + close button
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    // Round close button
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover { background: #ebebeb; }
+    }
+  }
+
+  // Form content
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // Single field — label above input
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    input,
+    select {
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--hover);
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      background: var(--background);
+      width: 100%;
+
+      &:focus { border-color: #1a1a1a; }
+    }
+  }
+
+  // Amount + Date sit side by side
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    // background-color: red;
+  }
+
+  // Validation error message
+  .form-error {
+    font-size: 12px;
+    color: #da5f50;
+    margin: 0;
+  }
+
+  // Submit button
+  .submit-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    background: #1a1a1a;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 4px;
+    transition: background 0.15s;
+
+    &:hover { background: var(--hover); }
+  }
+}
+

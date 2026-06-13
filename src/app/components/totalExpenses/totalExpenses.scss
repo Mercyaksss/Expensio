@@ -1,0 +1,66 @@
+.total-expenses {
+    grid-row: 1;
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--card-font);
+    
+    // Orange gradient — complements the purple income card
+    //   background: linear-gradient(135deg, var(--orange) 0%, #b84e1a 100%);
+    border: none;
+
+    gap: 0;
+    justify-content: space-between;
+
+  // ── Icon + label row ──────────────────────────
+  .kpi-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  // ── Amount ───────────────────────────────────
+  .kpi-amount {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 12px 0 0;
+    line-height: 1;
+  }
+
+  // ── Bottom tag ───────────────────────────────
+  .kpi-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 6px 0 0;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 850px) {
+  .total-expenses{
+    grid-row: 2 ;
+    grid-column: 1 / span 2;
+  }
+}

@@ -1,0 +1,239 @@
+/* ─── Reset & base ─────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+:root{
+  --background: #000000;
+  --card-background: #2c2c2c;
+  --accent: #0975fa;
+  --purple: #8e48cd;
+  --orange: #f76f32;
+  --white: #fffefe;
+  --text: black;
+  --text-muted: #a2a2a2;
+  --card-color: #06346d; 
+  --expense: rgb(207, 4, 4);
+  --expense-light: rgba(207, 4, 4, 0.5);
+
+  --guage: linear-gradient(90deg, var(--accent), var(--background));
+
+  --text-font: 'Poppins', sans-serif;
+  --card-font: "Roboto Mono", monospace;
+  --hover: #06346d7e;
+  --hover-2: #202020;
+  --hover-3: #1b1b1b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+body {
+  font-family: var(--text-font);
+  background: var(--background);
+  display: flex;
+}
+
+/* ─── App shell ────────────────────────────────── */
+/* Sidebar + page sit side by side */
+.app-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ─── Page wrapper ─────────────────────────────── */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 100vh;
+  overflow: hidden;
+
+  /* On mobile give a little more breathing room on the left
+     so content doesn't hide behind the floating sidebar tab */
+  @media (max-width: 1024px) {
+    padding-left: 36px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 16px 16px 16px 32px;
+  }
+
+  @media (max-width: 850px) {
+    height: fit-content;
+  }
+
+
+}
+
+/* ─── Nav bar ──────────────────────────────────── */
+nav {
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  h2 {
+    font-size: 20px;
+    color: var(--text-muted);
+    font-weight: normal;
+    letter-spacing: -0.02em;
+
+    span{
+      color: var(--white);
+    }
+  }
+
+  /* Nav action buttons group */
+  .nav-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ─── Nav buttons ──────────────────────────────── */
+.income-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: var(--card-background);
+  color: var(--text-muted);
+  border: none;
+  // outline: none;
+  font-size: 13px;
+  // font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(0,0,0,0.05); }
+
+  @media (max-width: 480px) {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+.add-expense-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: var(--card-background);
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.15s;
+
+  &:hover { background: #333; }
+
+  @media (max-width: 480px) {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+/* ─── Dashboard grid ───────────────────────────── */
+.grid {
+  background-color: var(--card-background);
+  display: grid;
+  padding: 10px;
+  border-radius: 10px;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+
+  /* Desktop */
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: calc(100vh - 88px);
+
+  /* Tablet — keep 4 cols but let height be natural */
+  @media (max-width: 850px) {
+    grid-template-rows: auto;
+    height: fit-content;
+  }
+
+  /* Mobile — single column */
+  @media (max-width: 610px) {
+    grid-template-columns: 1fr;  // ← this was being overridden
+    gap: 12px;
+  }
+}
+/* ─── Base card styles ─────────────────────────── */
+.card {
+  background-color: var(--background);
+  padding: 10px;
+  border-radius: 10px;
+  min-height: 0;   /* lets grid constrain the card height */
+  overflow: hidden;
+  
+
+  /* On tablet/mobile cards have a natural height */
+  @media (max-width: 1024px) {
+    min-height: 220px;
+  }
+}
+
+/* ─── Empty state (shared) ─────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+
+  p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+}
+
+
+/* ─── 610px mobile reset ────────────────────────────────────────────
+   Every card has explicit grid-column/grid-row placements for desktop
+   and 850px tablet. At 610px we reset ALL of them to auto so the 
+   single-column grid in globals.scss can actually take effect.
+   Add this block at the very bottom of globals.scss.
+──────────────────────────────────────────────────────────────────── */
+@media (max-width: 610px) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+  }
+
+  /* Reset every card's explicit placement back to auto */
+  .credit-card,
+  .total-income,
+  .total-expenses,
+  .financial-goals-card,
+  .expense-analysis-card,
+  .recent-expenses-card {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  /* Give cards a sensible min-height on mobile */
+  .card {
+    min-height: 180px;
+  }
+
+  /* Analysis and recent expenses cards need more height on mobile */
+  .expense-analysis-card { min-height: 300px; }
+  .recent-expenses-card  { min-height: 260px; }
+  .financial-goals-card  { min-height: 260px; }
+}
