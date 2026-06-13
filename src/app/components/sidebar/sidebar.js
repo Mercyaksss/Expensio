@@ -10,7 +10,6 @@ import "./sidebar.scss";
 import { BarChart3, Receipt, Settings, LogOut, ArrowRight, ArrowLeft} from 'lucide-react';
 
 
-// Nav items — add new pages here without touching the JSX
 const NAV_ITEMS = [
   { href: '/',         icon: BarChart3, label: 'Dashboard' },
   { href: '/Expenses', icon: Receipt,   label: 'Expenses'  },
@@ -62,7 +61,7 @@ function Sidebar() {
         {/* App name */}
         <h2 className="sidebar-logo">Expen<span>sio.</span></h2>
 
-        {/* Profile pill — name updates live from context */}
+        {/* Name updates live from context */}
         <div className="sidebar-profile">
           <div className="avatar">
             <Image src={pfp} width={36} height={36} alt="profile picture" />
@@ -92,7 +91,6 @@ function Sidebar() {
           ))}
         </nav>
 
-        {/* Logout — pushed to bottom by flex:1 on nav */}
         <button className="logout-btn">
           <LogOut width={20} height={20} color='#FFF' alt="Log Out Icon"/>
           <p>Log Out</p>

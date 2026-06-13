@@ -36,7 +36,6 @@ function FinancialGoalsCard() {
               cy="100%"
               startAngle={180}
               endAngle={0}
-              // Fixed pixel radii — arc size stays large regardless of wrapper height
               innerRadius={65}
               outerRadius={95}
               dataKey="value"

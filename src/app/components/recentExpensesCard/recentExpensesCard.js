@@ -40,7 +40,6 @@ function RecentExpensesCard() {
             return (
               <div className="recent-expense-row" key={item.id}>
 
-                {/* Colored icon square */}
                 <div className={`expense-icon ${meta.className}`}>
                   <i className={`ti ${meta.icon}`} aria-hidden="true" />
                 </div>
@@ -51,9 +50,7 @@ function RecentExpensesCard() {
                   <p className="expense-date">{item.date}</p>
                 </div>
 
-                {/* Amount */}
                 <span className="expense-amount">-₦{fmt(item.amount)}</span>
-
               </div>
             );
           })

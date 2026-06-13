@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   grid-row: 2 / span 2;
+  
   // ── Header ──────────────────────────────────
   .card-header {
     display: flex;
@@ -73,7 +74,6 @@
       &.tech      { background: rgba(239,159, 39, 0.12);  color: #EF9F27;       }
     }
 
-    // Name + date stacked vertically
     .expense-details {
       flex: 1;
       min-width: 0; // allows text-overflow to work inside flex
@@ -104,7 +104,6 @@
     }
   }
 
-  // ── Footer — sits naturally at the bottom via flex column ──
   .card-footer {
     margin-top: 12px;
     padding-top: 12px;

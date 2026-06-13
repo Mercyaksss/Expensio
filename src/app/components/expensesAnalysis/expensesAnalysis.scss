@@ -28,10 +28,9 @@
     }
   }
 
-  // Wrapper that gives the recharts container a concrete height
   .chart-area {
     flex: 1;
-    min-height: 0; // lets the flex child shrink inside a constrained card
+    min-height: 0; 
     height: 100%;
   }
 

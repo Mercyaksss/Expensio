@@ -53,8 +53,6 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  /* On mobile give a little more breathing room on the left
-     so content doesn't hide behind the floating sidebar tab */
   @media (max-width: 1024px) {
     padding-left: 36px;
   }

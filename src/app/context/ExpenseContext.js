@@ -2,11 +2,10 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-// ─────────────────────────────────────────────
 // Helper — safely read from localStorage
 // Returns the parsed value, or `fallback` if
 // the key doesn't exist or JSON.parse fails
-// ─────────────────────────────────────────────
+
 function readStorage(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -16,9 +15,8 @@ function readStorage(key, fallback) {
   }
 }
 
-// ─────────────────────────────────────────────
 // Helper — safely write to localStorage
-// ─────────────────────────────────────────────
+
 function writeStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));

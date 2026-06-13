@@ -22,6 +22,7 @@ function EditExpenseModal({ expense, onClose }) {
   // Pre-fill the form whenever a different expense is passed in
   useEffect(() => {
     if (expense) {
+      
       // Convert the display date back to yyyy-mm-dd for the date input
       const raw = new Date(expense.date);
       const yyyy = raw.getFullYear();

@@ -15,7 +15,6 @@ function CreditCard() {
   // Format a number as a readable Naira string e.g. 175000 → "175,000"
   const fmt = (n) => n.toLocaleString("en-NG");
 
-  // Fix hydration mismatch — server has no localStorage so renders 0,
   // client reads the real value. Wait until mounted before showing data.
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
