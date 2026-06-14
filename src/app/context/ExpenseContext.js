@@ -26,7 +26,7 @@ export const ExpenseContext = createContext(null);
 export function ExpenseProvider({ children }) {
 
   // ── State — initialised from localStorage so data survives refresh ──
-  const [userName, setUserName] = useState(() => readStorage("luma_userName", "Mercy Yakubu"));
+  const [userName, setUserName] = useState(() => readStorage("luma_userName", "User"));
   const [expenses, setExpenses] = useState(() => readStorage("luma_expenses", []));
   const [income,   setIncome]   = useState(() => readStorage("luma_income",   0));
 

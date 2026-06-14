@@ -47,8 +47,9 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px;
   height: 100vh;
+  padding: 10px;
+  padding-left: 200px;
   overflow: hidden;
 
   @media (max-width: 1024px) {

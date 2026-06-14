@@ -6,7 +6,7 @@ $tab-width: 20px;
 $mobile-break: 1024px;
 
 .sidebar {
-  position: relative;
+  position: fixed;
   height: 100vh;
   background: var(--background);
   display: flex;
@@ -15,7 +15,7 @@ $mobile-break: 1024px;
 
   // ── On tablet/mobile: sidebar is fixed and hidden off-screen ──
   @media (max-width: $mobile-break) {
-    position: fixed;
+    // position: fixed;
     top: 0;
     left: 0;
     z-index: 200;
@@ -192,7 +192,7 @@ $mobile-break: 1024px;
     transform: translateY(-50%);
     width: $tab-width;
     height: 52px;
-    background: #1a1a1a;
+    background: var(--card-background);
     border: none;
     border-radius: 0 10px 10px 0;
     cursor: pointer;
