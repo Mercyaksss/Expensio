@@ -1,10 +1,6 @@
+// The context file retrieves all the information so all other component can get it from here instead of passing it in as a prop
 "use client";
-
 import React, { createContext, useContext, useState, useEffect } from "react";
-
-// Helper — safely read from localStorage
-// Returns the parsed value, or `fallback` if
-// the key doesn't exist or JSON.parse fails
 
 function readStorage(key, fallback) {
   try {
@@ -15,8 +11,7 @@ function readStorage(key, fallback) {
   }
 }
 
-// Helper — safely write to localStorage
-
+//retrieve the information from local storage
 function writeStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -25,11 +20,9 @@ function writeStorage(key, value) {
   }
 }
 
+// Allows us use info from the context folder using useExpenseContext();
 export const ExpenseContext = createContext(null);
 
-// ─────────────────────────────────────────────
-// PROVIDER
-// ─────────────────────────────────────────────
 export function ExpenseProvider({ children }) {
 
   // ── State — initialised from localStorage so data survives refresh ──
@@ -42,7 +35,6 @@ export function ExpenseProvider({ children }) {
   useEffect(() => { writeStorage("luma_expenses", expenses); }, [expenses]);
   useEffect(() => { writeStorage("luma_income",   income);   }, [income]);
 
-  // ── Actions ──────────────────────────────────
 
   const addExpense = (newExpense) => {
     setExpenses((prev) => [...prev, { ...newExpense, id: Date.now() }]);
@@ -60,7 +52,6 @@ export function ExpenseProvider({ children }) {
     setUserName(name);
   };
 
-  // Wipes expenses and income but keeps the user's name
   const resetData = () => {
     setExpenses([]);
     setIncome(0);
@@ -69,7 +60,6 @@ export function ExpenseProvider({ children }) {
     writeStorage("luma_income",   0);
   };
 
-  // ── Derived values ────────────────────────────
 
   const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
 
@@ -80,7 +70,7 @@ export function ExpenseProvider({ children }) {
     const cat = e.category.toLowerCase();
     acc[cat] = (acc[cat] || 0) + e.amount;
     return acc;
-  }, {});
+  }, {});  
 
   const value = {
     userName,
@@ -103,10 +93,6 @@ export function ExpenseProvider({ children }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// CUSTOM HOOK
-// Usage: const { expenses, addExpense } = useExpenses();
-// ─────────────────────────────────────────────
 export function useExpenses() {
   const context = useContext(ExpenseContext);
   if (!context) {
