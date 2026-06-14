@@ -55,6 +55,7 @@ export function ExpenseProvider({ children }) {
   const resetData = () => {
     setExpenses([]);
     setIncome(0);
+    setUserName("User");
     // Also clear localStorage keys directly so stale data doesn't linger
     writeStorage("luma_expenses", []);
     writeStorage("luma_income",   0);
