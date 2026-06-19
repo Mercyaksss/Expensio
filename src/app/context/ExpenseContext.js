@@ -1,5 +1,5 @@
-// The context file retrieves all the information so all other component can get it from here instead of passing it in as a prop
 "use client";
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 function readStorage(key, fallback) {
@@ -11,7 +11,6 @@ function readStorage(key, fallback) {
   }
 }
 
-//retrieve the information from local storage
 function writeStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -20,21 +19,31 @@ function writeStorage(key, value) {
   }
 }
 
-// Allows us use info from the context folder using useExpenseContext();
 export const ExpenseContext = createContext(null);
 
 export function ExpenseProvider({ children }) {
 
-  // ── State — initialised from localStorage so data survives refresh ──
-  const [userName, setUserName] = useState(() => readStorage("luma_userName", "User"));
+  // ── Profile ──────────────────────────────────
+  const [userName, setUserName]   = useState(() => readStorage("luma_userName", "User"));
+  // Base64 image string, or null if no picture set
+  const [profilePic, setProfilePic] = useState(() => readStorage("luma_profilePic", null));
+
+  // ── Expenses + income ────────────────────────
   const [expenses, setExpenses] = useState(() => readStorage("luma_expenses", []));
   const [income,   setIncome]   = useState(() => readStorage("luma_income",   0));
 
-  // ── Persist to localStorage whenever state changes ──
-  useEffect(() => { writeStorage("luma_userName", userName); }, [userName]);
-  useEffect(() => { writeStorage("luma_expenses", expenses); }, [expenses]);
-  useEffect(() => { writeStorage("luma_income",   income);   }, [income]);
+  // ── Savings goal ──────────────────────────────
+  // { label: "New Laptop", target: 150000 }
+  const [goal, setGoal] = useState(() => readStorage("luma_goal", { label: "", target: 0 }));
 
+  // ── Persist on every change ──────────────────
+  useEffect(() => { writeStorage("luma_userName",   userName);   }, [userName]);
+  useEffect(() => { writeStorage("luma_profilePic", profilePic); }, [profilePic]);
+  useEffect(() => { writeStorage("luma_expenses",   expenses);   }, [expenses]);
+  useEffect(() => { writeStorage("luma_income",     income);     }, [income]);
+  useEffect(() => { writeStorage("luma_goal",       goal);       }, [goal]);
+
+  // ── Actions ──────────────────────────────────
 
   const addExpense = (newExpense) => {
     setExpenses((prev) => [...prev, { ...newExpense, id: Date.now() }]);
@@ -52,30 +61,47 @@ export function ExpenseProvider({ children }) {
     setUserName(name);
   };
 
+  // Accepts a base64 string (or null to remove the picture)
+  const updateProfilePic = (base64) => {
+    setProfilePic(base64);
+  };
+
+  // Sets the savings goal — { label, target }
+  const updateGoal = (label, target) => {
+    setGoal({ label, target: parseFloat(target) });
+  };
+
+  // Wipes expenses, income, and name — keeps profile picture untouched
+  // (remove the profilePic line below if you want it wiped too)
   const resetData = () => {
     setExpenses([]);
     setIncome(0);
     setUserName("User");
-    // Also clear localStorage keys directly so stale data doesn't linger
+    setProfilePic(null);
+    setGoal({ label: "", target: 0 });
     writeStorage("luma_expenses", []);
-    writeStorage("luma_income",   0);
+    writeStorage("luma_income", 0);
+    writeStorage("luma_userName", "User");
+    writeStorage("luma_goal", { label: "", target: 0 });
+    writeStorage("luma_profilePic", null);
   };
 
+  // ── Derived values ────────────────────────────
 
   const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
-
   const availableBalance = income - totalSpent;
 
-  // e.g. { savings: 15000, transport: 8000 }
   const spendingByCategory = expenses.reduce((acc, e) => {
     const cat = e.category.toLowerCase();
     acc[cat] = (acc[cat] || 0) + e.amount;
     return acc;
-  }, {});  
+  }, {});
 
   const value = {
     userName,
     updateName,
+    profilePic,
+    updateProfilePic,
     expenses,
     addExpense,
     deleteExpense,
@@ -84,6 +110,8 @@ export function ExpenseProvider({ children }) {
     totalSpent,
     availableBalance,
     spendingByCategory,
+    goal,
+    updateGoal,
     resetData,
   };
 

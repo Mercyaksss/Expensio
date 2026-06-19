@@ -51,10 +51,11 @@ $mobile-break: 1024px;
     margin-bottom: 32px;
 
     .avatar {
+      position: relative; /* required for next/image fill prop to work */
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      // background: #1a1a1a;
+      background: #1a1a1a;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -63,7 +64,12 @@ $mobile-break: 1024px;
       color: #fff;
       flex-shrink: 0;
       overflow: hidden;
+    
+      img {
+        object-fit: cover; /* crops uploaded photos to fill the circle nicely */
+      }
     }
+
 
     .profile-info {
       // Prevent long names from overflowing the pill
@@ -116,10 +122,15 @@ $mobile-break: 1024px;
     text-decoration: none;
     transition: background 0.15s;
 
-    img {
+     // ...
+    svg {
       width: 17px;
       height: 17px;
-      // opacity: 0.45;
+      flex-shrink: 0;
+    }
+    // ...
+    &.active svg {
+      color: #fff; // lucide icons use `color`/`stroke`, not `filter`
     }
 
     p {
@@ -133,10 +144,9 @@ $mobile-break: 1024px;
     &.active {
       // background: var(--accent);
       background: linear-gradient(90deg, var(--accent), var(--background));
-      img { opacity: 1; filter: brightness(0) invert(1); }
     }
 
-    &:not(.active):hover { background: var(--hover);  }
+    &:not(.active):hover { background: linear-gradient(90deg, var(--hover), #000)}
   }
 
   // Logout button — sits at the bottom

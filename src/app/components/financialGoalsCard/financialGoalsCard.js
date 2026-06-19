@@ -4,19 +4,25 @@ import { useExpenses } from "../../context/ExpenseContext";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import "./financialGoalsCard.scss";
 
-const TARGET = 150000;
-
 function FinancialGoalsCard() {
-  const { spendingByCategory } = useExpenses();
+  const { spendingByCategory, goal } = useExpenses();
+
+  const target = goal?.target || 0;
+  const label   = goal?.label  || "No goal set";
 
   const saved     = spendingByCategory["savings"] || 0;
-  const remaining = Math.max(TARGET - saved, 0);
-  const percent   = Math.min(Math.round((saved / TARGET) * 100), 100);
-  const fmt       = (n) => n.toLocaleString("en-NG");
+  const remaining = Math.max(target - saved, 0);
+
+  // Avoid divide-by-zero when no target has been set yet
+  const percent = target > 0
+    ? Math.min(Math.round((saved / target) * 100), 100)
+    : 0;
+
+  const fmt = (n) => n.toLocaleString("en-NG");
 
   const chartData = [
     { name: "Saved",     value: saved     },
-    { name: "Remaining", value: remaining },
+    { name: "Remaining", value: remaining || 1 }, // keep a sliver visible even at 0 target
   ];
 
   return (
@@ -24,7 +30,7 @@ function FinancialGoalsCard() {
 
       <div className="goals-header">
         <h3>Savings Goal</h3>
-        <span className="goal-label">New Laptop</span>
+        <span className="goal-label">{label}</span>
       </div>
 
       <div className="gauge-wrapper">
@@ -36,8 +42,8 @@ function FinancialGoalsCard() {
               cy="100%"
               startAngle={180}
               endAngle={0}
-              innerRadius={65}
-              outerRadius={95}
+              innerRadius={55}
+              outerRadius={90}
               dataKey="value"
               strokeWidth={0}
             >
@@ -60,7 +66,7 @@ function FinancialGoalsCard() {
         </div>
         <div className="goal-stat">
           <p className="stat-label">Target</p>
-          <p className="stat-value">₦{fmt(TARGET)}</p>
+          <p className="stat-value">₦{fmt(target)}</p>
         </div>
         <div className="goal-stat">
           <p className="stat-label">Remaining</p>

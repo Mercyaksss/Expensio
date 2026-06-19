@@ -207,3 +207,48 @@
     .save-btn { width: 100%; text-align: center; }
   }
 }
+
+    /* ─── Add this block inside .settings-page in settings.scss ─────── */
+
+    // Profile picture upload row
+    .pic-upload-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 4px;
+    }
+
+    // Circular preview — shows the uploaded image or an initial letter
+    .pic-preview {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      img { object-fit: cover; }
+
+      .pic-placeholder {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+      }
+    }
+
+    .pic-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    // Smaller variant of the existing save/cancel buttons
+    .save-btn.small,
+    .cancel-btn.small {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
